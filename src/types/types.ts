@@ -14,28 +14,63 @@ export interface NewUserRequestBody {
 export interface NewProductRequestBody {
     name: string,
     category: string,
-    price:number,
-    stock:number
+    price: number,
+    stock: number
 }
 
 export type ControllerType = (req: Request,
-     res: Response, next: NextFunction) => Promise<void | Response<any, Record<string, any>>>;
+    res: Response, next: NextFunction) => Promise<void | Response<any, Record<string, any>>>;
 
-     export type SearchRequestQuery={
-        search?:string,
-        price?:string,
-        category?:string,
-        sort?:string,
-        page?:string,
-     }
+export type SearchRequestQuery = {
+    search?: string,
+    price?: string,
+    category?: string,
+    sort?: string,
+    page?: string,
+}
 
-     export interface BaseQuery{
-        name?:{
-            $regex:string,
-            $options:string
-        },
-        price?: {
-            $lte: number;
-        };
-        category?: string ;
-     }
+export interface BaseQuery {
+    name?: {
+        $regex: string,
+        $options: string
+    },
+    price?: {
+        $lte: number;
+    };
+    category?: string;
+}
+
+export type invalidatesCacheProps = {
+    product?: boolean,
+    order?: boolean,
+    admin?: boolean,
+}
+
+
+export type OrderItemType = {
+    name: string,
+    photo: string,
+    price: number,
+    quantity: number,
+    productId: string
+}
+
+export type ShippingInfoType = {
+    address: string,
+    city: string,
+    state: string,
+    country: string,
+    pincode: number,
+}
+
+export interface NewOrderRequestBody {
+    shippingInfo: ShippingInfoType,
+    user: string,
+    subtotal: string,
+    tax: number,
+    shippingCharges: number,
+    discount: number,
+    total: number,
+    status?: string,
+    orderItems: OrderItemType[]
+}
