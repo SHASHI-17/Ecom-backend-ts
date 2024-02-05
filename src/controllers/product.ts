@@ -186,8 +186,7 @@ export const getAllProducts = TryCatch(async (req: Request<{}, {}, {}, SearchReq
     }
 
     const [products, filteredOnlyProduct] = await Promise.all([
-        Product.find(baseQuery)
-            .sort(sort && { price: sort === "asc" ? 1 : -1 }).limit(limit).skip(skip),
+        Product.find(baseQuery).sort(sort && { price: sort === "asc" ? 1 : -1 }).limit(limit).skip(skip),
         Product.find(baseQuery)
     ])
 
