@@ -9,6 +9,8 @@ import morgan from 'morgan'
 import userRoute from "./routes/user.js"
 import productRoute from "./routes/product.js"
 import orderRoute from "./routes/order.js"
+import paymentRoute from "./routes/payment.js"
+import dashboardRoute from "./routes/stats.js"
 
 // port , calling env and db connection 
 config({
@@ -31,6 +33,8 @@ app.get('/',(req,res)=>{  //  testing route
 app.use('/api/v1/user',userRoute); //user route
 app.use('/api/v1/product',productRoute); //product route
 app.use('/api/v1/order',orderRoute); //order route
+app.use('/api/v1/payment',paymentRoute); //payment route
+app.use('/api/v1/dashboard',dashboardRoute); //stats route
 
 app.use('/uploads',express.static("uploads"));
 app.use(errorMiddleware);
