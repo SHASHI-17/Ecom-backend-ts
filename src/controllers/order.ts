@@ -1,11 +1,10 @@
 import { Request } from "express";
+import { myCache } from "../app.js";
 import { TryCatch } from "../middlewares/error.js";
-import { NewOrderRequestBody } from "../types/types.js";
 import { Order } from "../models/order.js";
+import { NewOrderRequestBody } from "../types/types.js";
 import { invalidatesCache, reduceStock } from "../utils/features.js";
 import ErrorHandler from "../utils/utility-class.js";
-import { myCache } from "../app.js";
-import { populate } from "dotenv";
 
 
 
@@ -73,7 +72,7 @@ export const newOrder = TryCatch(async (req: Request<{}, {}, NewOrderRequestBody
    const order= await Order.create({ shippingInfo, orderItems, user, subtotal, tax, shippingCharges, discount, total });
     await reduceStock(orderItems);
 
-    await invalidatesCache({ product: true, order: true, admin: true,
+    invalidatesCache({ product: true, order: true, admin: true,
          userId: user,productId:orderItems.map(i=>String(i.productId))});
 
     return res.status(201).json({
@@ -101,7 +100,7 @@ export const processOrder = TryCatch(async (req, res, next) => {
     }
 
     await order.save();
-    await invalidatesCache({
+    invalidatesCache({
         product: false, order: true, admin: true,
         userId: order.user, orderId: String(order._id)
     });
@@ -118,7 +117,7 @@ export const deleteOrder = TryCatch(async (req, res, next) => {
     const order = await Order.findById(id);
     if (!order) return next(new ErrorHandler("Order Not Found", 404));
     await order.deleteOne();
-    await invalidatesCache({
+    invalidatesCache({
         product: false, order: true, admin: true,
         userId: order.user, orderId: String(order._id)
     });
