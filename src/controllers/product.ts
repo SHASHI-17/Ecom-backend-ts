@@ -165,7 +165,7 @@ export const getAllProducts = TryCatch(async (req: Request<{}, {}, {}, SearchReq
     const page = Number(req.query.page) || 1;
     const limit = Number(process.env.PRODUCT_PER_PAGE || 8);
     const skip = (page - 1) * limit;
-
+    
     const baseQuery: BaseQuery = {};
 
     if (search) {
@@ -175,12 +175,12 @@ export const getAllProducts = TryCatch(async (req: Request<{}, {}, {}, SearchReq
         }
     }
 
-    if (price) {
+    if (price)
         baseQuery.price = {
-            $lte: Number(price)
-        }
-    }
-
+            $lte: Number(price),
+        };
+        
+    
     if (category) {
         baseQuery.category = category;
     }
@@ -189,13 +189,14 @@ export const getAllProducts = TryCatch(async (req: Request<{}, {}, {}, SearchReq
         Product.find(baseQuery).sort(sort && { price: sort === "asc" ? 1 : -1 }).limit(limit).skip(skip),
         Product.find(baseQuery)
     ])
+    
 
-    const totalPages = Math.ceil(filteredOnlyProduct.length / limit); // round off oposite logic
+    const totalPage = Math.ceil(filteredOnlyProduct.length / limit); // round off oposite logic
 
     return res.status(200).json({
         success: true,
         products,
-        totalPages
+        totalPage
     })
 });
 

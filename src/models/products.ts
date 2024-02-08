@@ -10,8 +10,8 @@ const schema = new mongoose.Schema({
         required: [true, "Please add your photo"]
     },
     price: {
-        type: String,
-        required: [true, "Please enter the name of the product"]
+        type: Number,
+        required: [true, "Please enter the price of the product"]
     },
     stock: {
         type: Number,

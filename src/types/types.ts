@@ -23,7 +23,7 @@ export type ControllerType = (req: Request,
 
 export type SearchRequestQuery = {
     search?: string,
-    price?: string,
+    price?: number,
     category?: string,
     sort?: string,
     page?: string,
@@ -35,7 +35,7 @@ export interface BaseQuery {
         $options: string
     },
     price?: {
-        $lte: number;
+        $lte: number,
     };
     category?: string;
 }
