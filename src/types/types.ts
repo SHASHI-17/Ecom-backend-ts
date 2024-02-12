@@ -63,7 +63,7 @@ export type ShippingInfoType = {
     city: string,
     state: string,
     country: string,
-    pincode: number,
+    pincode: string,
 }
 
 export interface NewOrderRequestBody {
@@ -77,3 +77,4 @@ export interface NewOrderRequestBody {
     status?: string,
     orderItems: OrderItemType[]
 }
+
