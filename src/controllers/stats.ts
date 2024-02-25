@@ -258,6 +258,7 @@ export const getPieCharts = TryCatch(async (req, res, next) => {
         charts
     })
 });
+
 export const getBarCharts = TryCatch(async (req, res, next) => {
     let charts;
     const key = "admin-bar-charts";
